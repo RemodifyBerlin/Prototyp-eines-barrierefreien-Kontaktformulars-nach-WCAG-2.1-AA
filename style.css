@@ -1,0 +1,276 @@
+/*
+ * Globales Design-System (CSS)
+ * Umsetzung der Barrierefreiheitsanforderungen für Farben, Fokus und Skalierbarkeit.
+ */
+:root {
+    /*
+     * Farben
+     * Anforderung: Kontrastverhältnis mindestens 4.5:1 (WCAG 2.1 AA - 1.4.3 Contrast (Minimum)) für normalen Text.
+     * Hier: #333 auf #f9f9f9 ergibt ~15:1.
+     */
+    --color-bg: #f9f9f9;
+    --color-text: #333333;
+    --color-primary: #005a9c;
+    /* Dunkel genug für weißen Hintergrund (~7:1) */
+    --color-primary-dark: #003d6b;
+    --color-error: #d32f2f;
+    /* Rot mit ausreichendem Kontrast */
+    --color-white: #ffffff;
+    --color-border: #767676;
+    /* Grau mit > 3:1 Kontrast für UI-Komponenten (WCAG 2.1 - 1.4.11 Non-text Contrast) */
+
+    /*
+     * Fokus-Stile
+     * Zentral definierte Fokus-Indikatoren für konsistente Tastaturnavigation.
+     */
+    --focus-outline-color: #000000;
+    --focus-outline-width: 3px;
+
+    /*
+     * Typografie & Abstände
+     * Verwendung relativer Einheiten (rem/em) statt Pixeln (px).
+     * Dies ermöglicht des Skalieren des Textes bis 200% ohne Layout-Bruch (WCAG 2.1 - 1.4.4 Resize text).
+     */
+    --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --spacing-unit: 1rem;
+    --radius: 0.25rem;
+}
+
+/*
+ * Basis-Reset & Typografie
+ */
+* {
+    box-sizing: border-box;
+    /* Verhindert Layout-Probleme bei Padding/Border */
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-family);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.5;
+    /* Gute Lesbarkeit (WCAG 2.1 AA empfiehlt mind. 1.5 - 1.4.8 Visual Presentation) */
+    font-size: 1rem;
+    /* Basisgröße */
+}
+
+/*
+ * Barrierefreiheit: Fokus-Indikatoren
+ * Kritisch für Tastaturnutzer. Browsereigene Outlines werden oft als unzureichend empfunden.
+ * WCAG 2.1 - 2.4.7 "Focus Visible": Ein starker visueller Indikator ist Pflicht.
+ */
+:focus-visible {
+    outline: var(--focus-outline-width) solid var(--focus-outline-color);
+    outline-offset: 2px;
+    /* Trennung vom Element für bessere Sichtbarkeit */
+}
+
+/* Layout */
+.container {
+    max-width: 40rem;
+    /* Beschränkung der Zeilenlänge für Lesbarkeit (max ~80 Zeichen) */
+    margin: 0 auto;
+    padding: 0 var(--spacing-unit);
+}
+
+header {
+    background-color: var(--color-white);
+    padding: var(--spacing-unit) 0;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+main {
+    padding-bottom: calc(var(--spacing-unit) * 2);
+}
+
+footer {
+    text-align: center;
+    padding: var(--spacing-unit) 0;
+    border-top: 1px solid #ccc;
+    margin-top: calc(var(--spacing-unit) * 2);
+    font-size: 0.875rem;
+}
+
+/* Typografie */
+h1 {
+    margin-top: 0;
+    font-size: 2rem;
+}
+
+/* Formular-Stile */
+.form-group {
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+}
+
+/*
+ * Labels
+ * Große Klickflächen und eindeutige Zuordnung.
+ */
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 1.125rem;
+    /* Groß genug für Touch-Ziel-Kontext */
+}
+
+/* Visueller Hinweis für Pflichtfelder wird im HTML behandelt, hier nur Text-Styling */
+label span[aria-hidden="true"] {
+    color: var(--color-error);
+}
+
+/*
+ * Utility-Klasse: Visually Hidden
+ * Versteckt Elemente visuell, lässt sie aber für Screenreader zugänglich.
+ * Besser als display:none, was Inhalte komplett entfernt.
+ */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius);
+    background-color: var(--color-white);
+    color: var(--color-text);
+}
+
+/*
+ * Fehlerzustand
+ * Visuelle Hervorhebung bei Validierungsfehlern.
+ * Wird über JS mit aria-invalid="true" gesteuert.
+ */
+input[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+    border-color: var(--color-error);
+    border-width: 2px;
+}
+
+.error-message {
+    color: var(--color-error);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+    min-height: 1.3em;
+    /* Platz reservieren, um Sprünge zu vermeiden */
+}
+
+button {
+    display: inline-flex;
+    /* Flexbox für Ausrichtung von Text und Icon */
+    align-items: center;
+    /* Vertikal zentrieren */
+    justify-content: center;
+    /* Horizontal zentrieren */
+    gap: 0.5rem;
+    /* Abstand zwischen Text und Icon */
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-white);
+    background-color: var(--color-primary);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: var(--color-primary-dark);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* 
+ * Icon-Styling im Button
+ * Sicherstellen, dass das Bild passend skaliert.
+ */
+.button-icon {
+    width: 1em;
+    /* Relative Größe basierend auf Schriftgröße */
+    height: auto;
+    display: block;
+}
+
+/* 
+ * Submit-Gruppe
+ * Container für Button und Info-Badge
+ */
+.submit-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: var(--spacing-unit);
+}
+
+.info-badge {
+    /* 
+     * Optimale Größe für das Badge, 
+     * responsive max-width damit es auf Mobile nicht den Rahmen sprengt 
+     */
+    max-width: 200px;
+    height: auto;
+}
+
+/* Status-Nachricht */
+.status-message {
+    margin-top: var(--spacing-unit);
+    padding: var(--spacing-unit);
+    border-radius: var(--radius);
+}
+
+.status-message.success {
+    background-color: #e8f5e9;
+    color: #1b5e20;
+    border: 1px solid #c8e6c9;
+}
+
+.status-message.error {
+    background-color: #ffebee;
+    color: #b71c1c;
+    border: 1px solid #ffcdd2;
+}
+
+/*
+ * Responsive Anpassung (WCAG 1.4.10 Reflow)
+ * Stellt sicher, dass bei kleinen Bildschirmen (320px) kein horizontales Scrollen nötig ist.
+ */
+@media screen and (max-width: 320px) {
+    .container {
+        padding: 0 0.5rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    body {
+        hyphens: auto;
+        /* Verhindert horizontales Scrollen bei langen Wörtern (Reflow) */
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    button {
+        font-size: 1rem;
+    }
+}

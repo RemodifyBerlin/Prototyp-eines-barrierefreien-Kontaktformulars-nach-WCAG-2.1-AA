@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!-- Spracheinstellung (lang="de"): Essentiell für Screenreader, um die korrekte Aussprache zu wählen (WCAG 2.1 - 3.1.1 Language of Page).-->
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 
+        Viewport-Einstellung:
+        Muss Skalierbarkeit zulassen (user-scalable=no ist verboten).
+        Ermöglicht Zoom bis 200% ohne Informationsverlust (WCAG 2.1 - 1.4.4 Resize text).
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barrierefreies Kontaktformular</title>
+    <meta name="description" content="Ein barrierefreies Kontaktformular, das WCAG 2.1AA-Richtlinien erfüllt.">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- 
+        Landmarks (role="banner", role="main", role="contentinfo"):
+        Helfen Nutzern von Assistenztechnologien, schnell zu Bereichen zu navigieren.
+    -->
+    <header role="banner">
+        <div class="container">
+            <h1>Kontakt aufnehmen</h1>
+        </div>
+    </header>
+
+    <main role="main">
+        <div class="container">
+            <p>Schreiben Sie uns eine Nachricht. Felder, die mit <span aria-hidden="true">*</span> markiert sind, sind
+                Pflichtfelder.</p>
+
+            <!-- 
+                novalidate: Deaktiviert Standard-Browser-Validierung, damit wir 
+                barrierefreies JS-Feedback nutzen können.
+            -->
+            <form id="contact-form" action="#" method="post" novalidate>
+
+                <div class="form-group">
+                    <!-- 
+                        Label-Input-Verknüpfung via 'for' und 'id'.
+                        'visually-hidden': Text ist nur für Screenreader sichtbar (erklärt das Sternchen).
+                        'aria-hidden="true"': Versteckt das visuelle Sternchen vor Screenreadern (Redundanzvermeidung).
+                    -->
+                    <label for="name">Name <span aria-hidden="true">*</span><span class="visually-hidden">
+                            (Pflichtfeld)</span></label>
+                    <!-- 
+                        autocomplete="name": Hilft Nutzern, Daten schneller einzugeben (WCAG 1.3.5).
+                        aria-required="true": Programmatische Kennzeichnung als Pflichtfeld.
+                    -->
+                    <input type="text" id="name" name="name" required aria-required="true" autocomplete="name">
+                    <!-- 
+                        aria-live="polite": Screenreader lesen Änderungen hier vor (z.B. Fehlermeldung),
+                        ohne den Nutzer sofort zu unterbrechen.
+                    -->
+                    <div id="name-error" class="error-message" aria-live="polite"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-Mail-Adresse <span aria-hidden="true">*</span><span class="visually-hidden">
+                            (Pflichtfeld)</span></label>
+                    <input type="email" id="email" name="email" required aria-required="true" autocomplete="email">
+                    <div id="email-error" class="error-message" aria-live="polite"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Betreff</label>
+                    <input type="text" id="subject" name="subject">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Nachricht <span aria-hidden="true">*</span><span class="visually-hidden">
+                            (Pflichtfeld)</span></label>
+                    <textarea id="message" name="message" rows="5" required aria-required="true"></textarea>
+                    <div id="message-error" class="error-message" aria-live="polite"></div>
+                </div>
+
+                <div class="submit-group">
+                    <button type="submit">
+                        <span>Nachricht senden</span>
+                        <!-- 
+            Dekoratives Icon (alt="" und aria-hidden="true"), 
+            da der Button-Text bereits aussagekräftig ist.
+        -->
+                        <img src="Arrow.png" alt="" aria-hidden="true" class="button-icon">
+                    </button>
+
+                    <!-- 
+        Info-Badge: Enthält textuelle Information im Bild.
+        Deshalb ist das alt-Attribut zwingend erforderlich (WCAG 1.1.1 Non-text Content).
+    -->
+                    <img src="info_badge.png" alt="Rückmeldung in der Regel innerhalb von 24 Stunden"
+                        class="info-badge">
+                </div>
+
+                <div id="form-status" aria-live="polite" class="status-message"></div>
+            </form>
+        </div>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="container">
+            <p>Prototyp eines barrierefreien Kontaktformulars nach WCAG 2.1 AA</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
