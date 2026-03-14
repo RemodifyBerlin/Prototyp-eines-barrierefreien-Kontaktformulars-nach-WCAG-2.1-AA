@@ -81,6 +81,42 @@ header {
     margin-bottom: calc(var(--spacing-unit) * 2);
 }
 
+/* Hauptnavigation */
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--spacing-unit) 0;
+    display: flex;
+    gap: var(--spacing-unit);
+    flex-wrap: wrap;
+}
+
+.navbar li {
+    margin: 0;
+}
+
+.navbar a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.navbar a:hover,
+.navbar a:focus {
+    background-color: var(--color-primary-dark);
+    color: var(--color-white);
+    text-decoration: underline;
+}
+
+/* Aktuelle Seite markieren (gemäß WCAG 2.1) */
+.navbar a[aria-current="page"] {
+    position: relative;
+    border-bottom: 3px solid var(--color-primary);
+}
+
 main {
     padding-bottom: calc(var(--spacing-unit) * 2);
 }
@@ -91,6 +127,28 @@ footer {
     border-top: 1px solid #ccc;
     margin-top: calc(var(--spacing-unit) * 2);
     font-size: 0.875rem;
+}
+
+/* Fußzeilennavigation */
+.footer-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: var(--spacing-unit) 0 0 0;
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-unit);
+}
+
+.footer-nav a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    padding: 0.25rem;
+}
+
+.footer-nav a:hover,
+.footer-nav a:focus {
+    color: var(--color-primary-dark);
+    text-decoration: none;
 }
 
 /* Typografie */
@@ -256,10 +314,6 @@ button:active {
 @media screen and (max-width: 320px) {
     .container {
         padding: 0 0.5rem;
-    }
-
-    h1 {
-        font-size: 1.5rem;
     }
 
     body {
